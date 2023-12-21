@@ -1,0 +1,17 @@
+#!/bin/bash
+
+THRESHOLD=400
+EMAIL_ADDRESS="your-email@example.com"
+
+while true; do
+        job_count=$(lpstat -o | wc -l)
+		echo "Current print job count: $job_count"
+		if [ "$job_count" -ge "$THRESHOLD" ]; then
+        echo "Printing Job threshold reached. Sending email notification."
+        echo "Subject: Printing Job Threshold Reached" | mail -s "Printing Threshold Reached" "$EMAIL_ADDRESS"
+    fi
+    sleep $((24*60*60))
+done
+
+
+nohup /path/to/your/script.sh > /path/to/logfile.log 2>&1 &
